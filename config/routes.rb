@@ -5,7 +5,6 @@ SampleApp2::Application.routes.draw do
   root :to => 'static_pages#home'
 
   match '/signup', to: 'users#new'
-  match '/somecrap', to: 'users#edit'
 
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy'
