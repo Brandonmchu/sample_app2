@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
+  has_many :microposts, dependent: :destroy #<-- if microposts are dependant on user, destroy it as well
 
   before_save { |user| user.email = user.email.downcase }
   before_save :create_remember_token
@@ -11,6 +12,10 @@ class User < ActiveRecord::Base
                     uniqueness: true
   validates :password, length: {minimum: 6}
   validates :password_confirmation, presence: true
+
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
 
   private
 
